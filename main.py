@@ -1,4 +1,4 @@
-from flask import Flask,request
+from flask import Flask, request, jsonify
 from unidecode import unidecode
 
 app = Flask(__name__)
@@ -9,20 +9,15 @@ app = Flask(__name__)
 def index():
     return "<p>Hello Flask!</p>"
 
-@app.route("/about")
-def about():
-    return "<h1>about</h1>"
-
-@app.route("/translate")
-@app.route("/translate/<string:texto>")
-def translate(texto = None):
-    textoAux = ''
-    #en request.method se obtiene el tipo de metodo (GET,POST,PUT)
-    if texto != None:
-        textoAux  = unidecode(texto).lower()
-    return f"""
-        <p>texto formateado: {textoAux}</p>
-    """
+@app.route("/api/translate", methods=["GET", "POST"])
+def translate():
+    if request.method == "POST":
+        content = request.json
+        #texto formateado, se quitan comillas, mayusculas, etc.
+        formattedText = unidecode(content['mapudungun']).lower()
+        print(formattedText)
+        #se retorna un json con el texto formateado
+        return jsonify({'formattedText':formattedText})
 
 if __name__ == '__main__':
     app.run(debug=True)
