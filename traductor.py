@@ -14,7 +14,7 @@ dataset.head()
 
 # dataset a lista
 dataset_lst = dataset.to_numpy().tolist()
-print(dataset_lst[0])
+# print(dataset_lst[0])
 
 # Crear "tokens"
 #source_tokens = []
@@ -34,8 +34,8 @@ for sentence in dataset_lst:
     source_tokens.append(sentence[0].split(' '))
     target_tokens.append(sentence[1].split(' '))
 
-print(source_tokens[0])
-print(target_tokens[0])
+# print(source_tokens[0])
+# print(target_tokens[0])
 
 
 def build_token_dict(token_list):
@@ -72,7 +72,7 @@ output_tokens = [tokens + ['<PAD>'] *
                  (target_max_len-len(tokens)) for tokens in output_tokens]
 
 
-print(encoder_tokens[120000])
+# print(encoder_tokens[120000])
 
 
 encoder_input = [list(map(lambda x: source_token_dict[x], tokens))
@@ -82,7 +82,7 @@ decoder_input = [list(map(lambda x: target_token_dict[x], tokens))
 output_decoded = [list(map(lambda x: [target_token_dict[x]], tokens))
                   for tokens in output_tokens]
 
-print(encoder_input[120000])
+# print(encoder_input[120000])
 
 
 # Crear la red transformer
@@ -98,7 +98,6 @@ model = get_model(
 )
 model.compile('adam', 'sparse_categorical_crossentropy')
 model.summary()
-
 
 # cargado
 model.load_weights('modelo entrenado.h5')
@@ -117,12 +116,12 @@ def translate(sentence):
                 continue
             elif token not in source_token_dict:
                 sentence_tokens[idx][idy] = ''
-    print('sentence_tokens:', sentence_tokens)
+    #print('sentence_tokens:', sentence_tokens)
     ###########
 
     tr_input = [list(map(lambda x: source_token_dict[x], tokens))
                 for tokens in sentence_tokens][0]
-    print("tr_input:", tr_input)
+    #print("tr_input:", tr_input)
     decoded = decode(
         model,
         tr_input,
