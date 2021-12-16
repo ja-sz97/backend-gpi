@@ -7,6 +7,10 @@ from traductor import translate
 
 app = Flask(__name__)
 
+#UTF-8
+app.config['JSON_AS_ASCII'] = False
+
+
 # Pasar parametros en la url --> @app.route("/ruta/<param>")
 # parametros con su tipo --> @app.route("/ruta/<string:param>") --> string,int,float
 
