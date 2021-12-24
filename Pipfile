@@ -9,6 +9,7 @@ unidecode = "*"
 pandas = "*"
 numpy = "*"
 keras-transformer = "*"
+tensorflow= "*"
 
 [dev-packages]
 
